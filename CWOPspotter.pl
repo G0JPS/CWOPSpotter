@@ -96,7 +96,9 @@ sub getcwops{
 
 	print "Getting member list...\n\n";
 	my $content = qx{curl http://hamclubs.info/lists/CWOPS_members.txt};
-	die "CWOPS: No Web Data\n" unless defined $content;
+	if ($content eq "") {
+		die "CWOPS: No Web Data\n"
+	}
 
 	while ($content =~ /([^\n]+)\n?/g){
 		my $line = $1;
@@ -125,7 +127,7 @@ while (time() <= $endtime){
 	$currLine = $rbn->getline();
 	chomp $currLine;
 	
-	if ($currLine =~ /DX de .+CW.+/){
+	if ($currLine ne "" && $currLine =~ /DX de .+CW.+/){
 		$currLine =~ s/DX de //g;
 		$currLine =~ s/-#://g;
 		$currLine =~ s/^\s+//;
