@@ -94,15 +94,15 @@ sub start_telnet{
 
 sub getcwops{ 
 
-	print "Getting member list...\n\n";
-	my $content = qx{curl http://hamclubs.info/lists/CWOPS_members.txt};
+	print "Getting member list...";
+	my $content = qx{curl https://docs.google.com/spreadsheets/d/1Ew8b1WAorFRCixGRsr031atxmS0SsycvmOczS_fDqzc/export?format=csv};
 	die "CWOPS: No Web Data\n" unless defined $content;
 
 	while ($content =~ /([^\n]+)\n?/g){
 		my $line = $1;
 		chomp $line;
-		my ($exp, $call, $number, $name, $d1) = split / /, $line;
-		$cwops{$call}=$name . ", " . $number;
+		my ($null, $exp, $call, $number, $name, $d1) = split /,/, $line;
+		$cwops{$call}=$call . " " . $name . " " . $number;
 	}
 	print "\nDone!\n\n";
 }
