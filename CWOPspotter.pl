@@ -111,6 +111,9 @@ sub getcwops{
 }
 
 sub cwop_spotted{
+	if ($callsign ~= /^(U[R-Z]\d\D{1,3})/{
+ 		print "Слава Україні!\n";
+   		}
 	$cwopspot = "$time on $band: $callsign ($cwops{$realcall}) running $speed wpm on $freq kHz\a\n";
 	# And add the call to the heard list with a timestamp
 	$cwopsheard{$realcall}=time();
